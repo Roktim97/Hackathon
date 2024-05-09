@@ -50,12 +50,7 @@ function SurveyPost() {
     //   }
     //   console.log(formObject)
 
-      const response = await axios.post("http://localhost:3000/add", surveyData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-       
-      })
+      const response = await axios.post("http://localhost:3000/add", surveyData)
      
 console.log(response)
     } catch (error) {
