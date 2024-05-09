@@ -26,7 +26,7 @@ const surveyDataSchema = new mongoose.Schema({
         required: true
     },
     belowPoverty: {
-        type: Number,
+        type: String,
         required: true
     },
     // business: {

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 function SurveyPost() {
   const [surveyData, setSurveyData] = useState({
@@ -14,9 +15,9 @@ function SurveyPost() {
   const handleInputChange = (field, value) => {
     setSurveyData((prevsurveyData) => ({
       ...prevsurveyData,
-      [field]: value
-    }))
-  }
+      [field]: value,
+    }));
+  };
 
   const handleHouseTypeChange = (event) => {
     setSurveyData({
@@ -25,22 +26,42 @@ function SurveyPost() {
     });
   };
   const handlebelowPoverty = (event) => {
-   setSurveyData({
-     ...surveyData,
-     belowPoverty: event.target.value,
-   });
- };
+    setSurveyData({
+      ...surveyData,
+      belowPoverty: event.target.value,
+    });
+  };
 
-  const HandleSubmit = async(e)=>{
-    e.preventDefault()
-    try{
-      
-        console.log(surveyData)
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+    //   const formData = new FormData();
+    //   formData.append('pincode', surveyData.pincode)
+    //   formData.append('infants', surveyData.infants)
+    //   formData.append('kids', surveyData.kids)
+    //   formData.append('pregnantWomens', surveyData.pregnantWomens)
+    //   formData.append('seniorCitizen', surveyData.seniorCitizen)
+    //   formData.append('others', surveyData.others)
+    //   formData.append('houseType', surveyData.houseType)
+    //   formData.append('belowPoverty', surveyData.belowPoverty)
+    //   const formObject = {}
+    //   for (const [key, value] of formData.entries()) {
+    //     formObject[key] = value
+    //   }
+    //   console.log(formObject)
 
-    }catch(error){
-        console.log(error)
+      const response = await axios.post("http://localhost:3000/add", surveyData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+       
+      })
+     
+console.log(response)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -62,9 +83,8 @@ function SurveyPost() {
                 placeholder="Enter area pincode"
                 required
                 className="w-full lg:w-[40%] px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 "
-                onChange={(e) =>
-                    handleInputChange('pincode', e.target.value)}     
-            />
+                onChange={(e) => handleInputChange("pincode", e.target.value)}
+              />
             </div>
 
             <div className="mb-4 flex flex-col lg:flex-row">
@@ -80,8 +100,7 @@ function SurveyPost() {
                 required
                 placeholder="Enter number of infants"
                 className="w-full lg:w-[40%]  px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                onChange={(e) =>
-                    handleInputChange('infants', e.target.value)}    
+                onChange={(e) => handleInputChange("infants", e.target.value)}
               />
             </div>
             <div className="mb-4 flex flex-col lg:flex-row">
@@ -97,8 +116,7 @@ function SurveyPost() {
                 required
                 placeholder="Enter number of kids"
                 className="w-full lg:w-[40%]  px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                onChange={(e) =>
-                    handleInputChange('kids', e.target.value)}   
+                onChange={(e) => handleInputChange("kids", e.target.value)}
               />
             </div>
             <div className="mb-4 flex flex-col lg:flex-row">
@@ -115,8 +133,9 @@ function SurveyPost() {
                 placeholder="Enter number of pregnant womens"
                 className="w-full lg:w-[40%]  px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 onChange={(e) =>
-                    handleInputChange('pregnantWomens', e.target.value)}   
-            />
+                  handleInputChange("pregnantWomens", e.target.value)
+                }
+              />
             </div>
             <div className="mb-4 flex flex-col lg:flex-row">
               <div className="w-full  lg:w-[60%]  text-xl text-gray-700  mb-2 p-2 ">
@@ -132,12 +151,13 @@ function SurveyPost() {
                 placeholder="Enter number of senior citizen"
                 className="w-full lg:w-[40%]  px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 onChange={(e) =>
-                    handleInputChange('seniorCitizen', e.target.value)}  
+                  handleInputChange("seniorCitizen", e.target.value)
+                }
               />
             </div>
             <div className="mb-4 flex flex-col lg:flex-row">
               <div className="w-full  lg:w-[60%]  text-xl text-gray-700  mb-2 p-2 ">
-                Others are present in your household?
+                Any other members are present in your household?
               </div>
 
               <input
@@ -148,8 +168,7 @@ function SurveyPost() {
                 required
                 placeholder="Enter others number"
                 className="w-full lg:w-[40%]  px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                onChange={(e) =>
-                    handleInputChange('others', e.target.value)}  
+                onChange={(e) => handleInputChange("others", e.target.value)}
               />
             </div>
 
@@ -173,7 +192,7 @@ function SurveyPost() {
                 </label>
                 <label htmlFor="nonRCC" className="rounded-full p-2 mr-2 ">
                   <input
-                    type="radio"    
+                    type="radio"
                     id="nonRCC"
                     name="houseType"
                     value="Non-RCC"
@@ -219,15 +238,14 @@ function SurveyPost() {
                 </label>
               </div>
             </div>
-            <div className='mb-2 text-center'>
-                  <button
-                    className='px-4 py-4 mt-4 w-32 text-sm font-semibold text-white bg-[#2979B7] rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600'
-                    onClick={HandleSubmit}
-                  >
-                    Submit
-                  </button>
-                </div>
-
+            <div className="mb-2 text-center">
+              <button
+                className="px-4 py-4 mt-4 w-32 text-sm font-semibold text-white bg-[#2979B7] rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                onClick={HandleSubmit}
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </div>
