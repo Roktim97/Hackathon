@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function SurveyPost() {
   const [surveyData, setSurveyData] = useState({
@@ -35,31 +37,40 @@ function SurveyPost() {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
-    //   const formData = new FormData();
-    //   formData.append('pincode', surveyData.pincode)
-    //   formData.append('infants', surveyData.infants)
-    //   formData.append('kids', surveyData.kids)
-    //   formData.append('pregnantWomens', surveyData.pregnantWomens)
-    //   formData.append('seniorCitizen', surveyData.seniorCitizen)
-    //   formData.append('others', surveyData.others)
-    //   formData.append('houseType', surveyData.houseType)
-    //   formData.append('belowPoverty', surveyData.belowPoverty)
-    //   const formObject = {}
-    //   for (const [key, value] of formData.entries()) {
-    //     formObject[key] = value
-    //   }
-    //   console.log(formObject)
+      // const formData = new FormData();
+      // formData.append('pincode', surveyData.pincode)
+      // formData.append('infants', surveyData.infants)
+      // formData.append('kids', surveyData.kids)
+      // formData.append('pregnantWomens', surveyData.pregnantWomens)
+      // formData.append('seniorCitizen', surveyData.seniorCitizen)
+      // formData.append('others', surveyData.others)
+      // formData.append('houseType', surveyData.houseType)
+      // formData.append('belowPoverty', surveyData.belowPoverty)
+      // const formObject = {}
+      // for (const [key, value] of formData.entries()) {
+      //   formObject[key] = value
+      // }
+      // console.log(formObject)
 
-      const response = await axios.post("http://localhost:3000/add", surveyData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-       
-      })
-     
-console.log(response)
+      const response = await axios.post("http://localhost:3000/add", surveyData)
+
+      if(response) {
+        setSurveyData({
+          pincode: "",
+          infants: "",
+          kids: "",
+          pregnantWomens: "",
+          seniorCitizen: "",
+          others: "",
+          houseType: "",
+          belowPoverty: "",
+        })
+        toast.success(response.data.message)
+      }
     } catch (error) {
+      console.log(error.message)
       console.log(error);
+      toast.error(error.message)
     }
   };
 
@@ -249,6 +260,7 @@ console.log(response)
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </>
   );
 }

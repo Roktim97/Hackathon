@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require("mongoose")
 const cors = require('cors')
+const SurveyData = require('./models/SurveyData')
 
 require('dotenv').config()
 
@@ -8,10 +9,10 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true, multipart: true }))
 const corsOptions = {
-    origin: JSON.parse(process.env.allowedUrls),
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type']
+    origin: "*",
 }
+
+app.use(cors(corsOptions))
 
 mongoose
   .connect(process.env.mongoUrl, {
@@ -26,11 +27,18 @@ mongoose
   })
 
 app.post('/add', async (req, res) => {
-  console.log("hai")
-    console.log(req.body)
+    try {
+        const data = req.body
+        if(data) {
+          const newData = new SurveyData(data)
+          await newData.save()
+          res.status(201).json({message: "Survey data successfully submitted"})
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message: "something went wrong",  error: error.message})
+    }
 })
-
-app.use(cors(corsOptions))
 
 app.listen(3000, ()=>{
     console.log("Server is running")
