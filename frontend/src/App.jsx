@@ -1,27 +1,15 @@
 import './App.css'
-import Plot from 'react-plotly.js';
+// import Plot from 'react-plotly.js';
+import { Route,Routes } from 'react-router-dom'
+import SurveyPost from './pages/surveyPost'
 
 function App() {
 
   return (
     <>
-    <div>
-
-    
-    <Plot
-      data={[
-        {
-          x: [1, 2, 3],
-          y: [2, 6, 3],
-          type: 'bar',
-          mode: 'lines',
-          // marker: {color: 'red'},
-        },
-        // {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
-      ]}
-      layout={ {width: 1000, height: 1000, title: 'A Fancy Plot'} }
-    />
-    </div>
+   <Routes>
+    <Route path="/" element={<SurveyPost />}/>
+   </Routes>
     </>
   )
 }
