@@ -25,6 +25,10 @@ mongoose
     console.log(err.message)
   })
 
+app.post('/add', async (req, res) => {
+    
+})
+
 app.use(cors(corsOptions))
 
 app.listen(3000, ()=>{

@@ -25,26 +25,26 @@ const surveyDataSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    farmers: {
+    belowPoverty: {
         type: Number,
         required: true
     },
-    business: {
-        type: Number,
-        required: true
-    },
-    salaried: {
-        type: Number,
-        required: true
-    },
-    unemployed: {
-        type: Number,
-        required: true
-    },
-    homeMaker: {
-        type: Number,
-        required: true
-    },
+    // business: {
+    //     type: Number,
+    //     required: true
+    // },
+    // salaried: {
+    //     type: Number,
+    //     required: true
+    // },
+    // unemployed: {
+    //     type: Number,
+    //     required: true
+    // },
+    // homeMaker: {
+    //     type: Number,
+    //     required: true
+    // },
     date: {
         type: String,
         required: true
