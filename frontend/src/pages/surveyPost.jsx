@@ -31,9 +31,8 @@ function SurveyPost() {
    });
  };
 
-  console.log(surveyData)
   const HandleSubmit = async(e)=>{
-    e.prevent.default()
+    e.preventDefault()
     try{
       
         console.log(surveyData)
@@ -50,7 +49,7 @@ function SurveyPost() {
           <div className="text-center text-5xl font-bold uppercase py-8">
             Survey Form
           </div>
-          <form className="border-2 p-4 rounded-lg bg-white shadow-lg lg:p-16 p-4">
+          <form className="border-2 p-4 rounded-lg bg-white shadow-lg lg:p-16">
             <div className="mb-4 flex flex-col lg:flex-row w-full  ">
               <div className="w-full  lg:w-[60%]  text-xl text-gray-700  mb-2 p-2 ">
                 Write your survey area pincode
@@ -222,7 +221,6 @@ function SurveyPost() {
             </div>
             <div className='mb-2 text-center'>
                   <button
-                    type='submit'
                     className='px-4 py-4 mt-4 w-32 text-sm font-semibold text-white bg-[#2979B7] rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600'
                     onClick={HandleSubmit}
                   >
