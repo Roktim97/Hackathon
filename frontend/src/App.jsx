@@ -1,10 +1,10 @@
 import './App.css'
-// import Plot from 'react-plotly.js';
 import { Route,Routes } from 'react-router-dom'
 import SurveyPost from './pages/surveyPost'
 import Navbar from './components/Navbar'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { useState } from 'react'
+import Analytics from './pages/Analytics';
 
 function App() {
   const [show, setShow] = useState(false)
@@ -15,10 +15,11 @@ function App() {
 
   return (
     <div className='relative'>
-      <RxHamburgerMenu className="w-10 h-10 absolute right-4 top-4 z-10" onClick={toggleNav}/>
+      <RxHamburgerMenu className="w-10 h-10 absolute right-4 top-4 z-20 cursor-pointer" onClick={toggleNav}/>
       <Navbar show={show}/>
       <Routes>
         <Route path="/" element={<SurveyPost />}/>
+        <Route path="/dashboard" element={<Analytics />}/>
       </Routes>
     </div>
   )
