@@ -3,8 +3,9 @@ from pydantic import BaseModel
 from typing import Dict, List
 from langchain_openai import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
+import os
 
-openai_api_key = "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"
+openai_api_key = os.environ.get("openai_api_key")
 
 app = FastAPI()
 
