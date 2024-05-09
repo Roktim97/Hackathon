@@ -26,7 +26,8 @@ mongoose
   })
 
 app.post('/add', async (req, res) => {
-    
+  console.log("hai")
+    console.log(req.body)
 })
 
 app.use(cors(corsOptions))
