@@ -3,9 +3,12 @@ import PieChart from "../components/PieChart";
 import axios from "axios";
 import { useState, useEffect } from 'react'
 import ModalComponent from "../components/ModalComponent";
+import ReportModal from "../components/ReportModal";
 
 const Analytics = () => {
   const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [report, setReport] = useState("")
   const [houseTypeAnylatics, setHouseTypeAnylatics] = useState({
     fields: [],
     count: []
@@ -90,6 +93,10 @@ const Analytics = () => {
   const closeModal = () => {
     setOpen(false)
   }
+
+  const closeReportModal = () => {
+    setIsOpen(false)
+  }
   const handleReportGeneration = async (options)=>{
     const data = {
       Disaster_Type: options.Disaster_Type,
@@ -103,7 +110,9 @@ const Analytics = () => {
       Non_RCC_building: houseTypeAnylatics.count[1]
     }
     const response = await axios.post('http://localhost:8000/disaster_support', data)
-    console.log("col..........",response.data.response)
+    if(response){
+        setReport(response.data.response)
+    }
   }
 
   return (
@@ -136,6 +145,7 @@ const Analytics = () => {
             </div>
         </div>
         <ModalComponent isOpen={open} onRequestClose={closeModal} callBackfunc={handleReportGeneration}/>
+        <ReportModal isOpen={isOpen} onRequestClose={closeReportModal} report={report}/>
     </>
   );
 };
