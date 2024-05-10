@@ -1,16 +1,16 @@
 import Plot from 'react-plotly.js';
 
-const BarChart = () => {
+const BarChart = (prop) => {
   return (
     <Plot
         data={[
             {
-                x: ["Italy","France","Spain","USA","Argentina"],
-                y: [55, 49, 44, 24, 15],
+                x: prop.data.fields,
+                y: prop.data.count,
                 type: "bar"
             }
         ]}
-        layout = {{title:"World Wide Wine Production"}}
+        layout = {{title:prop.title}}
     />
   )
 }

@@ -1,13 +1,22 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, List
 from langchain_openai import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 import os
 
-openai_api_key = os.environ.get("openai_api_key")
+openai_api_key = "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"
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow requests from all origins
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
 
 # Define a Pydantic model to validate the incoming data
 class DisasterData(BaseModel):

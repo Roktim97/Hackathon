@@ -1,16 +1,16 @@
 import Plot from "react-plotly.js"
 
-const PieChart = () => {
+const PieChart = (prop) => {
   return (
     <Plot
         data={[
           {
-            labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-            values: [55, 49, 44, 24, 15],
+            labels: prop.data.fields,
+            values: prop.data.count,
             type: "pie"
           }
         ]}
-        layout={{ title: "World Wide Wine Production - Pie Chart" }}
+        layout={{ title: prop.title }}
       />
   )
 }
