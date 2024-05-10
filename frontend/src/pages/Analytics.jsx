@@ -4,8 +4,11 @@ import axios from "axios";
 import { useState, useEffect } from 'react'
 import ModalComponent from "../components/ModalComponent";
 import ReportModal from "../components/ReportModal";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const Analytics = () => {
+  const [pincode, setPincode] = useState(null) 
   const [open, setOpen] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [report, setReport] = useState("")
@@ -27,7 +30,7 @@ const Analytics = () => {
   useEffect(() => {
     const fetchhouseData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/getHouseAnylatics")
+        const response = await axios.get(`http://localhost:3000/getHouseAnylatics?pincode=${pincode}`)
           //  console.log(response.data)
         if (response.data) {
           setHouseTypeAnylatics((prevhouseTypeAnylatics) => ({
@@ -43,11 +46,11 @@ const Analytics = () => {
    
     fetchhouseData()
     
-  }, [])
+  }, [pincode])
   useEffect(() => {
     const fetchhouseData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/getBplAnylatics")
+        const response = await axios.get(`http://localhost:3000/getBplAnylatics?pincode=${pincode}`)
           //  console.log(response.data)
         if (response.data) {
           setBplAnylatics((prevbplAnylatics) => ({
@@ -63,11 +66,11 @@ const Analytics = () => {
    
     fetchhouseData()
     
-  }, [])
+  }, [pincode])
   useEffect(() => {
     const fetchhouseData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/getpopulationAnylatics")
+        const response = await axios.get(`http://localhost:3000/getpopulationAnylatics?pincode=${pincode}`)
           //  console.log(response.data)
         if (response.data) {
           setPopulationAnylatics((prevpopulationAnylatics) => ({
@@ -83,12 +86,19 @@ const Analytics = () => {
    
     fetchhouseData()
     
-  }, [])
+  }, [pincode])
 
   // const HandleModal = () => {
   //   console.log("hai")
   //   setOpen(!open)
   // }
+
+  const openModal = () => {
+    if(!pincode) {
+        return toast.error("Please enter pincode")
+    }
+    setOpen(true)
+  }
 
   const closeModal = () => {
     setOpen(false)
@@ -119,11 +129,19 @@ const Analytics = () => {
     <>
         <div className="flex flex-col justify-center items-center gap-10 py-5">
             <h1 className="text-4xl text-center p-5 uppercase text-blue-600 underline">Analytics Dashboard</h1>
-            <div className="flex justify-between  container mx-auto px-16 flex-wrap">
-              <div></div>
+            <div className="flex justify-between items-center container mx-auto px-16 flex-wrap">
+              <div className="space-x-5">
+                <label className="text-lg">Enter Pincode</label>
+                <input
+                    type="number"
+                    className="p-2 border-2"
+                    value={pincode || ""}
+                    onChange={(e)=>setPincode(e.target.value)}
+                />
+              </div>
               <button
                 className="px-4 py-4 mt-4  text-sm font-semibold text-white bg-[#2979B7] rounded hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-                onClick={()=>setOpen(true)}
+                onClick={openModal}
               >
                 Generate Report
               </button>
@@ -146,6 +164,7 @@ const Analytics = () => {
         </div>
         <ModalComponent isOpen={open} onRequestClose={closeModal} callBackfunc={handleReportGeneration}/>
         <ReportModal isOpen={isOpen} onRequestClose={closeReportModal} report={report}/>
+        <ToastContainer/>
     </>
   );
 };
